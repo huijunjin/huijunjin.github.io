@@ -12,7 +12,7 @@ title                    : "JINHUIJUN"
 title_separator          : "-"
 name                     : &name "JINHUIJUN"
 description              : &description "PhD. Student"
-url                      : https://jinhuijun.github.io # the base hostname & protocol for your site e.g. "https://[your GitHub username].github.io"
+url                      : https://rlagnlrns.github.io # the base hostname & protocol for your site e.g. "https://[your GitHub username].github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "jinhuijun.github.io"
 

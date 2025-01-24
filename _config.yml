@@ -8,10 +8,10 @@
 
 # Basic Site Settings
 locale                   : "en-US"
-title                    : "HUIJUNJIN"
+title                    : "Huijun Jin"
 title_separator          : "-"
-name                     : &name "HUIJUNJIN"
-description              : &description "Ph.D. Student"
+name                     : &name "Huijun Jin"
+description              : &description "Ph.D. Student at Yonsei University, Korea"
 url                      : https://huijunjin.github.io # the base hostname & protocol for your site e.g. "https://[your GitHub username].github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "huijunjin.github.io"
@@ -22,9 +22,9 @@ repository               : "huijunjin.github.io"
 author:
   # Biographic information
   avatar           : "profile.png"
-  name             : "HUIJUNJIN"
+  name             : "Huijun Jin"
   pronouns         : # example: "she/her"  
-  bio              : "Short biography for the left-hand sidebar"
+  bio              : "Ph.D. Student at Yonsei University, Korea"
   location         : "Seoul"
   employer         : "Yonsei University"
   uri              : # URL
@@ -36,7 +36,7 @@ author:
   impactstory      : # URL
   orcid            : "http://orcid.org/yourorcidurl"
   semantic         : # URL
-  pubmed           : "https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
+  pubmed           : # URL
   researchgate     : # URL
   scopus           : # URL
 

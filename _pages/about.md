@@ -7,9 +7,7 @@ redirect_from:
   - /about.html
 ---
 
-Hi, I am a Ph.D. student in the Department of Computer Science at Yonsei University, Seoul, South Korea. I am fortunate to be advised by [Sanghyun Park](https://delab.yonsei.ac.kr/sanghyun/). My research interests lie in the area of Database Systems, Vector Indexing Algorithms, and Retrieval-Augmented Generation.
-
-Previously, I received my M.S. in Computer Science Yonsei University.
+Hi, I am a Ph.D. student in the Department of Computer Science at Yonsei University, Seoul, South Korea. I am fortunate to be advised by [Sanghyun Park](https://delab.yonsei.ac.kr/sanghyun/).
 
 Research Interests
 ======

@@ -36,5 +36,6 @@ Skills
 
 Projects
 ======
-* [S/W Starlab from 2020 to 2025] (https://github.com/addb-swstarlab)
+* [S/W Starlab from 2020 to 2025](https://github.com/addb-swstarlab)
+
 

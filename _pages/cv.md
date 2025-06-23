@@ -16,19 +16,23 @@ Education
 
 Work experience
 ======
-* Fall 2015: Research Assistant
-  * Github University
-  * Duties included: Merging pull requests
-  * Supervisor: Professor Hub
+* Spring 2022: Researcher
+  * Yonsei University
+  * Duties included: S/W Startlab program developement and database testing
+  * Supervisor: Sanghyun Park
 
 Skills
 ======
-* Skill 1
-* Skill 2
-  * Sub-skill 2.1
-  * Sub-skill 2.2
-  * Sub-skill 2.3
-* Skill 3
+* DBMS
+  * Auto Parameter Tuning
+  * Vector Indexing Algorithm Optimization
+  * NoSQL(Redis, RocksDB)
+* Multi-Language
+  * Chinese
+  * Korean
+  * English
+* RAG
+* ML / DL for DBMS
 
 Projects
 ======

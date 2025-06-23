@@ -1,11 +1,11 @@
 ---
 title: "Rtune: a rocksdb tuning system with deep genetic algorithm"
 collection: publications
-category: manuscripts
+category: conferences
 permalink: /publication/RTune
 excerpt: 'This paper is about RTune'
 date: 2022-07-08
-venue: 'Conference'
+venue: 'GECCO'
 paperurl: 'http://academicpages.github.io/files/paper1.pdf'
 ---
 

@@ -27,12 +27,12 @@ Skills
   * Auto Parameter Tuning
   * Vector Indexing Algorithm Optimization
   * NoSQL(Redis, RocksDB)
+* RAG
+* ML / DL for DBMS
 * Multi-Language
   * Chinese
   * Korean
   * English
-* RAG
-* ML / DL for DBMS
 
 Projects
 ======

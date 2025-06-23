@@ -11,17 +11,11 @@ redirect_from:
 
 Education
 ======
-* Ph.D in Version Control Theory, GitHub University, 2018 (expected)
-* M.S. in Jekyll, GitHub University, 2014
-* B.S. in GitHub, GitHub University, 2012
+* M.S. in Yonsei University, South Korea, 2022
+* B.S. in Yanbian University, Yanji, China, 2018
 
 Work experience
 ======
-* Spring 2024: Academic Pages Collaborator
-  * Github University
-  * Duties includes: Updates and improvements to template
-  * Supervisor: The Users
-
 * Fall 2015: Research Assistant
   * Github University
   * Duties included: Merging pull requests
@@ -36,9 +30,7 @@ Skills
   * Sub-skill 2.3
 * Skill 3
 
-Publications
+Projects
 ======
-  <ul>{% for post in site.publications reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
+* [S/W Starlab from 2020 to 2025] (https://github.com/addb-swstarlab)
 

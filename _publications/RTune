@@ -1,9 +1,0 @@
----
-title: "Rtune: a rocksdb tuning system with deep genetic algorithm"
-collection: publications
-category: conferences
-permalink: /_publication/RTune
-date: 2022-07-08
-venue: 'GECCO'
-paperurl: 'https://github.com/huijunjin/huijunjin.github.io/tree/master/files/RTune.pdf'
----

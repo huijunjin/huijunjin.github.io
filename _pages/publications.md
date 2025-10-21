@@ -13,7 +13,7 @@ author_profile: true
   
 ### Journals
 * An Efficient and Noise-Robust Framework for High-Dimensional Tuning in Big Data Analytics. Jieun Lee*, Sangmin Seo, Chanho Yeom, **Huijun Jin**, Sein Kwon, Sanghyun Park. **_Engineering Applications of Artificial Intelligence._ 2025.** [📖](https://doi.org/10.1016/j.engappai.2025.111332)
-* Improvement of RocksDB Performance via Large-Scale Parameter Analysis and Optimization. **Huijun Jin***, Won Gi Choi, Jonghwan Choi, Hanseung Sung, Sanghyun Park. **_Journal of Information Processing Systems._ 2022.** [📖](https://koreascience.kr/article/JAKO202220257593379.page)
+* Improvement of RocksDB Performance via Large-Scale Parameter Analysis and Optimization. **Huijun Jin***, Won Gi Choi, Jonghwan Choi, Hanseung Sung, Sanghyun Park. **_Journal of Information Processing Systems._ 2022.** [📖](https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11282205)
 
 
 ## 🏠 Domestic

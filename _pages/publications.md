@@ -7,6 +7,7 @@ author_profile: true
 ## 🌐 International
 ### Conferences
 * PRO-HNSW: Proactive Repair and Optimization for High-Performance Dynamic HNSW Indexes. **Huijun Jin***, Jieun Lee, Shengmin Piao, Sangmin Seo, and Sanghyun Park **_ICDE_ 2026** [📖]()
+* LatentTune: Efficient Tuning of High Dimensional Database Parameters via Latent Representation Learning. Sein Kwon*, Youngwan Jo, Seungyeon Choi, Jieun Lee, **Huijun Jin**, Sanghyun Park **_HiPC_ 2025** [📖]()
 * Efficient Approximate Nearest Neighbor Search via Data-AdaptiveParameter Adjustment in Hierarchical Navigable Small Graphs. **Huijun Jin***, Jieun Lee, Shengmin Piao, Sangmin Seo, Sein Kwon, and Sanghyun Park **_DATE_ 2025** [📖](https://ieeexplore.ieee.org/document/10992903)
 * RTune: a RocksDB tuning system with deep genetic algorithm. **Huijun Jin***, Jieun Lee, and Sanghyun Park. **_GECCO_ 2022** [📖](https://doi.org/10.1145/3512290.3528726)
   

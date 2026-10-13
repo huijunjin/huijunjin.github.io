@@ -57,8 +57,10 @@ Also co-inventor of two pending Korean patent applications in database parameter
 
 Research Experience
 ======
+* **Participant, [S/W Starlab project](https://github.com/addb-swstarlab)** (IITP, Korea), Mar. 2020 – Aug. 2022, Mar. 2024 – Dec. 2024
+  * Government-funded project on a high-performance in-memory distributed DBMS based on flash memory storage (IITP-2017-0-00477), during M.S. and Ph.D. studies.
 * **Researcher (post-master's)**, Data Engineering Lab, Yonsei University, Mar. 2022 – Aug. 2022
-  * Software development and database testing for the S/W Starlab project (IITP, Korea).
+  * Software development and database testing for the S/W Starlab project.
 
 Conference Presentations
 ======
@@ -69,8 +71,10 @@ Conference Presentations
 
 Teaching
 ======
+* Teaching Assistant, *Software Capstone Design*, Yonsei University, Sep. 2020 – Dec. 2020
+  * Mentored one undergraduate capstone project team.
 * Teaching Assistant, *Database Systems*, Yonsei University, Mar. 2020 – Jun. 2020
-* Teaching Assistant, Yanbian University, academic year 2018–2019
+* Teaching Assistant, Yanbian University, Jul. 2018 – Jun. 2019
   * Assisted undergraduate courses across the department: in-class interpretation and help with assignments.
 
 Awards and Scholarships

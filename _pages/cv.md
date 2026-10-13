@@ -21,7 +21,7 @@ Education
 ======
 * **Ph.D. in Computer Science**, Yonsei University, Seoul, Korea, Mar. 2024 – Feb. 2027 (expected)
   * Dissertation: *Optimizing Efficiency, Updatability, and Robustness of HNSW Indexes for High-Performance Vector Search*
-  * Advisor: Prof. Sanghyun Park. Preliminary defense passed; final defense planned for Nov.–Dec. 2026.
+  * Advisor: Prof. Sanghyun Park
 * **M.S. in Computer Science**, Yonsei University, Seoul, Korea, Mar. 2020 – Feb. 2022
   * Advisor: Prof. Sanghyun Park
 * **B.Eng. in Computer Science and Technology**, Yanbian University, Yanji, China, Sep. 2014 – Jun. 2018
@@ -47,24 +47,39 @@ Publications
 
 Seven papers in Korean venues (Communications of the KIISE, KIISE Transactions on Computing Practices, KCC, KIPS), including a first-author survey on retrieval-augmented generation and vector databases in a special issue of Communications of the KIISE (2024). See [Publications]({{ base_path }}/publications/).
 
+Patents
+======
+* Sanghyun Park, **Huijun Jin**, Jieun Lee, Shengmin Piao, Sangmin Seo, Sein Kwon. Method and Program for Approximate Nearest Neighbor Search via Data-Adaptive Parameter Adjustment. U.S. Patent Application Publication [US 2026/0141002 A1](https://patents.google.com/patent/US20260141002A1/en), May 2026 (priority: Korean Patent Application 10-2024-0166800, Nov. 2024).
+* Sanghyun Park, **Huijun Jin**, Jieun Lee. Database Tuning Method Using Deep Genetic Algorithm. Korean Patent No. 10-2727561, granted Nov. 2024.
+* Sanghyun Park, **Huijun Jin**, Jonghwan Choi, Won Gi Choi, Hanseung Sung. Method and Apparatus for Tuning Database Based on Machine Learning. Korean Patent No. 10-2703138, granted Sep. 2024.
+
+Also co-inventor of two pending Korean patent applications in database parameter tuning.
+
 Research Experience
 ======
-* **Data Engineering Lab, Yonsei University** (Advisor: Prof. Sanghyun Park)
-  * Ph.D. researcher, Mar. 2024 – present
-  * Researcher (post-master's), Mar. 2022 – Aug. 2022
-  * M.S. researcher, Mar. 2020 – Feb. 2022
-  * Participant, [S/W Starlab program](https://github.com/addb-swstarlab) (IITP, Korea): software development and database testing
+* **Researcher (post-master's)**, Data Engineering Lab, Yonsei University, Mar. 2022 – Aug. 2022
+  * Software development and database testing for the S/W Starlab project (IITP, Korea).
 
 Conference Presentations
 ======
 * CAMP-HNSW — VLDB 2027, Athens, Greece (scheduled, Aug. 2027)
 * PRO-HNSW — ICDE 2026, Montréal, Canada
-* Data-adaptive HNSW search — DATE 2025, Lyon, France
+* DHNSW — DATE 2025, Lyon, France
 * RTune — GECCO 2022, Boston, USA
 
 Teaching
 ======
-* Teaching Assistant, *Database Systems*, Yonsei University, Spring 2020
+* Teaching Assistant, *Database Systems*, Yonsei University, Mar. 2020 – Jun. 2020
+* Teaching Assistant, Yanbian University, academic year 2018–2019
+  * Assisted undergraduate courses across the department: in-class interpretation and help with assignments.
+
+Awards and Scholarships
+======
+* Best Paper Award, KIPS Fall Conference (Korea Information Processing Society), 2020
+* Academic Research Fellowship (ARF), Yonsei University, 2026
+* BK21 Scholarship, Yonsei University, 2025–2026
+* Special Scholarship for International Students, Yonsei University, 2020–2022, 2024–2025
+* National Scholarship, China, 2017
 
 Skills and Languages
 ======

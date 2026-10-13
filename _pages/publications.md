@@ -6,7 +6,7 @@ author_profile: true
 ---
 ## 🌐 International
 ### Conferences
-* CAMP-HNSW: Hardware-Topological Co-Design for OOD-Robust ANNS via Cache Alignment and Targeted Rewiring. **Huijun Jin*** and Sanghyun Park. **_VLDB 2026_.** [📖]()
+* CAMP-HNSW: Hardware-Topological Co-Design for OOD-Robust ANNS via Cache Alignment and Targeted Rewiring. **Huijun Jin*** and Sanghyun Park. **_VLDB 2027_.** [📖]()
 * PRO-HNSW: Proactive Repair and Optimization for High-Performance Dynamic HNSW Indexes. **Huijun Jin***, Jieun Lee, Shengmin Piao, Sangmin Seo, and Sanghyun Park. **_ICDE 2026_.** [📖](https://delab.yonsei.ac.kr/assets/files/publication/international/conference/Revised_PRO-HNSW%20Proactive%20Repair%20and%20Optimization%20for%20High-Performance%20Dynamic%20HNSW%20Indexes.pdf)
 * LatentTune: Efficient Tuning of High Dimensional Database Parameters via Latent Representation Learning. Sein Kwon*, Youngwan Jo, Seungyeon Choi, Jieun Lee, **Huijun Jin**, Sanghyun Park. **_HiPC 2025_.** [📖](https://ieeexplore.ieee.org/abstract/document/11433345/)
 * Efficient Approximate Nearest Neighbor Search via Data-AdaptiveParameter Adjustment in Hierarchical Navigable Small Graphs. **Huijun Jin***, Jieun Lee, Shengmin Piao, Sangmin Seo, Sein Kwon, and Sanghyun Park. **_DATE 2025_.** [📖](https://ieeexplore.ieee.org/document/10992903)

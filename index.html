@@ -60,7 +60,7 @@
     <figure class="live">
       <span class="tag">Live · nearest-neighbour search</span>
       <canvas id="live-search" aria-label="Animation: a query appears and an HNSW search jumps from the entry point across the upper layers, then walks the bottom layer to the five nearest points"></canvas>
-      <figcaption>An HNSW search: long jumps on the sparse upper layers (amber), then a close look on the bottom layer (blue) to the five nearest points. <a href="demo/?lang=en#intro">See it in the demo →</a></figcaption>
+      <figcaption>An HNSW search: long jumps on the sparse upper layers (amber), then a close look on the bottom layer (blue) to the five nearest points.</figcaption>
     </figure>
   </div>
 </section>
@@ -80,7 +80,7 @@
           <h3>DHNSW: density-adaptive construction</h3>
           <p>Each point's local density sets its own link budget. Crowded regions get more links and sparse ones fewer, and a lower bottom-layer cap trims memory while recall holds.</p>
         </div>
-        <div class="acts"><a href="https://ieeexplore.ieee.org/document/10992903">Paper</a><a href="https://github.com/huijunjin/DHNSW">Code</a><a href="demo/?lang=en#density">Demo</a></div>
+        <div class="acts"><a href="https://ieeexplore.ieee.org/document/10992903">Paper</a><a href="https://github.com/huijunjin/DHNSW">Code</a></div>
       </article>
       <article class="move pro">
         <div class="stage"><span class="eyebrow">Update</span><span class="venue">ICDE 2026</span></div>
@@ -89,7 +89,7 @@
           <h3>PRO-HNSW: proactive repair</h3>
           <p>Deleting and reinserting points breaks paths in the graph. PRO-HNSW clears obsolete links, reconnects cut-off points and adds missing reverse links, so the index stays searchable without a rebuild.</p>
         </div>
-        <div class="acts"><a href="https://delab.yonsei.ac.kr/assets/files/publication/international/conference/Revised_PRO-HNSW%20Proactive%20Repair%20and%20Optimization%20for%20High-Performance%20Dynamic%20HNSW%20Indexes.pdf">Paper</a><a href="https://github.com/huijunjin/PRO-HNSW">Code</a><a href="demo/?lang=en#repair">Demo</a></div>
+        <div class="acts"><a href="https://delab.yonsei.ac.kr/assets/files/publication/international/conference/Revised_PRO-HNSW%20Proactive%20Repair%20and%20Optimization%20for%20High-Performance%20Dynamic%20HNSW%20Indexes.pdf">Paper</a><a href="https://github.com/huijunjin/PRO-HNSW">Code</a></div>
       </article>
       <article class="move camp">
         <div class="stage"><span class="eyebrow">Search</span><span class="venue">PVLDB 2026</span></div>
@@ -98,7 +98,7 @@
           <h3>CAMP-HNSW: cache alignment and shortcuts</h3>
           <p>Queries from another modality strand a search on one side of the data. CAMP-HNSW packs nearby vectors together in memory and adds shortcuts, mined from past queries, where searches get lost.</p>
         </div>
-        <div class="acts"><a href="https://github.com/huijunjin/CAMP-HNSW">Code</a><a href="demo/?lang=en#shortcut">Demo</a></div>
+        <div class="acts"><a href="https://github.com/huijunjin/CAMP-HNSW">Code</a></div>
       </article>
     </div>
     <div class="together">
@@ -107,7 +107,6 @@
         <h3>All three in one index, inside Milvus</h3>
         <p>The three techniques are combined into one HNSW, built into Knowhere, the vector search engine of Milvus, and measured over the index's full life cycle against Milvus's default HNSW.</p>
       </div>
-      <div class="acts"><a href="demo/?lang=en#versus">Side by side</a><a href="demo/?lang=en#perf">Measured results</a></div>
     </div>
   </div>
 </section>
@@ -126,12 +125,12 @@
           <div class="links"><a class="chip primary" href="demo/?lang=en#intro">Open the demo</a></div>
         </div>
         <ol class="scenes">
-          <li><a href="demo/?lang=en#intro"><span class="n">00</span><span><b>How HNSW searches</b>: layers, build, search</span></a></li>
-          <li><a href="demo/?lang=en#density"><span class="n">01</span><span><b>Density-adaptive build</b>: DHNSW</span></a></li>
-          <li><a href="demo/?lang=en#repair"><span class="n">02</span><span><b>Update and repair</b>: PRO-HNSW</span></a></li>
-          <li><a href="demo/?lang=en#shortcut"><span class="n">03</span><span><b>Cache alignment and shortcuts</b>: CAMP-HNSW</span></a></li>
-          <li><a href="demo/?lang=en#versus"><span class="n">04</span><span><b>Side by side with Milvus</b></span></a></li>
-          <li><a href="demo/?lang=en#perf"><span class="n">05</span><span><b>Measured in Milvus</b></span></a></li>
+          <li><span class="n">00</span><span><b>How HNSW searches</b>: layers, build, search</span></li>
+          <li><span class="n">01</span><span><b>Density-adaptive build</b>: DHNSW</span></li>
+          <li><span class="n">02</span><span><b>Update and repair</b>: PRO-HNSW</span></li>
+          <li><span class="n">03</span><span><b>Cache alignment and shortcuts</b>: CAMP-HNSW</span></li>
+          <li><span class="n">04</span><span><b>Side by side with Milvus</b></span></li>
+          <li><span class="n">05</span><span><b>Measured in Milvus</b></span></li>
         </ol>
       </div>
     </div>
@@ -151,7 +150,7 @@
           <div class="title">CAMP-HNSW: Hardware-Topological Co-Design for OOD-Robust ANNS via Cache Alignment and Targeted Rewiring</div>
           <div class="authors"><span class="me">Huijun Jin</span>, Sanghyun Park</div>
           <div class="venue-full">Proceedings of the VLDB Endowment, 20(2):438–451, 2026. To be presented at VLDB 2027, Athens.</div>
-          <div class="acts"><a href="https://github.com/huijunjin/CAMP-HNSW">Code</a><a href="demo/?lang=en#shortcut">Demo</a></div>
+          <div class="acts"><a href="https://github.com/huijunjin/CAMP-HNSW">Code</a></div>
         </div>
       </li>
       <li class="pub pro">
@@ -160,7 +159,7 @@
           <div class="title">PRO-HNSW: Proactive Repair and Optimization for High-Performance Dynamic HNSW Indexes</div>
           <div class="authors"><span class="me">Huijun Jin</span>, Jieun Lee, Shengmin Piao, Sangmin Seo, Sanghyun Park</div>
           <div class="venue-full">IEEE International Conference on Data Engineering, 2026.</div>
-          <div class="acts"><a href="https://delab.yonsei.ac.kr/assets/files/publication/international/conference/Revised_PRO-HNSW%20Proactive%20Repair%20and%20Optimization%20for%20High-Performance%20Dynamic%20HNSW%20Indexes.pdf">PDF</a><a href="https://github.com/huijunjin/PRO-HNSW">Code</a><a href="demo/?lang=en#repair">Demo</a></div>
+          <div class="acts"><a href="https://delab.yonsei.ac.kr/assets/files/publication/international/conference/Revised_PRO-HNSW%20Proactive%20Repair%20and%20Optimization%20for%20High-Performance%20Dynamic%20HNSW%20Indexes.pdf">PDF</a><a href="https://github.com/huijunjin/PRO-HNSW">Code</a></div>
         </div>
       </li>
       <li class="pub">
@@ -187,7 +186,7 @@
           <div class="title">Efficient Approximate Nearest Neighbor Search via Data-Adaptive Parameter Adjustment in Hierarchical Navigable Small Graphs</div>
           <div class="authors"><span class="me">Huijun Jin</span>, Jieun Lee, Shengmin Piao, Sangmin Seo, Sein Kwon, Sanghyun Park</div>
           <div class="venue-full">Design, Automation &amp; Test in Europe Conference, 2025.</div>
-          <div class="acts"><a href="https://ieeexplore.ieee.org/document/10992903">Paper</a><a href="https://github.com/huijunjin/DHNSW">Code</a><a href="demo/?lang=en#density">Demo</a></div>
+          <div class="acts"><a href="https://ieeexplore.ieee.org/document/10992903">Paper</a><a href="https://github.com/huijunjin/DHNSW">Code</a></div>
         </div>
       </li>
       <li class="pub">

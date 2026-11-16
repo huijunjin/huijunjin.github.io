@@ -150,7 +150,7 @@ section { padding-block: 44px; }
 .acts a { text-decoration: none; color: var(--ink-2); display: inline-flex; align-items: center; gap: 4px; }
 .acts a:hover { color: var(--c, var(--accent)); }
 .acts a::after { content: "→"; font-size: 0.85em; opacity: 0.6; }
-.together { margin-top: 16px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 28px; align-items: center; background: var(--surface-2); border-radius: var(--r); padding: 20px 22px; }
+.together { margin-top: 16px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px 28px; align-items: center; background: var(--surface-2); border-radius: var(--r); padding: 20px 22px; }
 .together h3 { font-size: var(--step-1); margin-bottom: 4px; }
 .together p { color: var(--ink-2); font-size: 0.95rem; }
 .together .dots { display: flex; gap: 6px; margin-bottom: 10px; }
@@ -166,8 +166,7 @@ section { padding-block: 44px; }
 .demo h2 { font-size: var(--step-2); }
 .demo p { color: var(--ink-2); }
 .scenes { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; align-content: start; }
-.scenes a { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; align-items: baseline; text-decoration: none; padding: 7px 8px; border-radius: 8px; color: var(--ink-2); font-size: 0.93rem; }
-.scenes a:hover { background: var(--surface-2); color: var(--ink); }
+.scenes li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; align-items: baseline; padding: 6px 0; color: var(--ink-2); font-size: 0.93rem; }
 .scenes .n { font: 500 0.78rem/1 var(--mono); color: var(--ink-3); }
 .scenes b { color: var(--ink); font-weight: 500; }
 @media (max-width: 760px) { .demo .body { grid-template-columns: minmax(0, 1fr); padding: 22px 20px 24px; } }

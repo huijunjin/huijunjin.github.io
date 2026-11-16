@@ -2,7 +2,7 @@
 <html lang="ko" class="app-root">
 <head>
 <meta charset="utf-8">
-<title>DELAB 연구 데모</title>
+<title>Unified-HNSW Demo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap">
 <style>
@@ -149,7 +149,7 @@ input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; border-radius
   background: rgba(20, 20, 19, 0.86); color: #fff; padding: 10px 18px; border-radius: 10px;
   font-size: 18px; white-space: nowrap;
 }
-.panel { display: flex; flex-direction: column; gap: 22px; padding-top: 8px; min-height: 0; }
+.panel { display: flex; flex-direction: column; gap: 18px; padding-top: 8px; min-height: 0; }
 .panel .meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .panel .controls { display: grid; gap: 18px; }
 .panel .row { display: flex; gap: 10px; align-items: center; }
@@ -460,7 +460,7 @@ window.STRINGS.ko = {
     kicker: 'Cache · Shortcuts',
     meta: 'CAMP-HNSW · VLDB 2027',
     title: '메모리는 가깝게,<br>길 잃은 쿼리엔 지름길',
-    lead: '데이터와 다른 곳에서 온 쿼리(예: 이미지 데이터에 텍스트 쿼리)는 한쪽 띠에 갇혀 이웃을 놓침. 가까운 점끼리 메모리에 나란히 두어 캐시 미스를 줄이고, 지난 쿼리가 길을 잃은 곳에 지름길을 놓음.',
+    lead: '다른 곳에서 온 쿼리(예: 이미지 데이터에 텍스트 쿼리)는 한쪽 띠에 갇혀 이웃을 놓침. 가까운 점끼리 메모리에 나란히 두고, 지난 쿼리가 길을 잃은 곳에 지름길을 놓음.',
     steps: [['정렬', '가까운 점끼리 메모리에 나란히 둠'], ['검색', '학습 쿼리로 미리 찾아 봄'], ['채굴', '찾은 점과 놓친 이웃을 이어 봄'], ['주입', '기존 연결과 겨뤄 남은 것만 넣음'], ['확인', '새 쿼리가 지름길로 건너감']],
     modes: ['기본 HNSW', '정렬 + 지름길'],
     train: '학습 쿼리 수',
@@ -715,7 +715,7 @@ window.STRINGS.en = {
     kicker: 'Cache · Shortcuts',
     meta: 'CAMP-HNSW · VLDB 2027',
     title: 'Close in memory,<br>shortcuts for lost queries',
-    lead: 'Queries from somewhere other than the data (text over images, say) get stuck on one band. CAMP-HNSW stores nearby points side by side in memory to cut cache misses, and lays shortcuts where past queries got lost.',
+    lead: 'Queries from elsewhere (text over images, say) get stuck on one band. CAMP-HNSW stores nearby points side by side in memory and lays shortcuts where past queries got lost.',
     steps: [['Align', 'store nearby points side by side'], ['Search', 'try past queries first'], ['Mine', 'link what was found to what was missed'], ['Inject', 'keep links that beat the existing ones'], ['Check', 'a new query crosses on a shortcut']],
     modes: ['Plain HNSW', 'Align + shortcuts'],
     train: 'Past (training) queries',

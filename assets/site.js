@@ -88,18 +88,21 @@
     pts.forEach(p => g.add(p));
     const links = [];
     g.links.forEach((ls, u) => { for (const v of ls[0]) if (u < v || !g.links[v][0].includes(u)) links.push([u, v]); });
-    // Queries the search answers exactly, far enough from the entry to show both phases.
-    const K = 5, EF = 12, runs = [];
-    for (let t = 0; t < 80 && runs.length < 8; t++) {
-      const q = [0.1 + r() * 0.8, 0.1 + r() * 0.8];
-      const res = g.search(q, K, EF, { trace: true }), truth = new Set(g.bruteForce(q, K));
-      if (res.ids.some(id => !truth.has(id))) continue;
-      const ev = res.trace.evaluated, first = new Map();
+    // One traced search, ready to draw.
+    const K = 5, EF = 12;
+    function searchFrom(q) {
+      const res = g.search(q, K, EF, { trace: true }), ev = res.trace.evaluated, first = new Map();
       ev.forEach((e, i) => { if (!first.has(e.id)) first.set(e.id, i); });
       const path = res.trace.path, at = path.map(id => (id === g.entry ? -1 : first.get(id)));
-      const upHops = path.filter((id, j) => j > 0 && ev[at[j]].layer > 0).length;
-      if (upHops < 1 || path.length < 4) continue;
-      runs.push({ q, ev, path, at, found: res.ids });
+      return { q, ev, path, at, found: res.ids, exact: res.ids.every(id => g.bruteForce(q, K).includes(id)),
+               upHops: path.filter((id, j) => j > 0 && ev[at[j]].layer > 0).length };
+    }
+    // The looping examples: queries the search answers exactly, far enough from
+    // the entry to show both phases.
+    const runs = [];
+    for (let t = 0; t < 80 && runs.length < 8; t++) {
+      const run = searchFrom([0.1 + r() * 0.8, 0.1 + r() * 0.8]);
+      if (run.exact && run.upHops >= 1 && run.path.length >= 4) runs.push(run);
     }
 
     let view = hidpi(live), C = {};
@@ -158,16 +161,24 @@
       ctx.beginPath(); ctx.arc(qx, qy, 6.5, 0, Math.PI * 2); ctx.strokeStyle = alpha(C.surface, qa); ctx.lineWidth = 2; ctx.stroke();
     }
 
-    let idx = 0, start = null, raf = 0, visible = true;
-    const still = () => { if (runs.length) draw(runs[0], span - FADE - 0.01); };
+    let idx = 0, current = runs[0], start = null, raf = 0, visible = true;
+    const still = () => { if (current) draw(current, span - FADE - 0.01); };
     function frame(now) {
       if (start == null) start = now;
       let t = (now - start) / 1000;
-      if (t > span) { idx = (idx + 1) % runs.length; start = now; t = 0; }
-      draw(runs[idx], t);
+      if (t > span) { idx = (idx + 1) % runs.length; current = runs[idx]; start = now; t = 0; }
+      draw(current, t);
       raf = requestAnimationFrame(frame);
     }
-    const play = () => { cancelAnimationFrame(raf); start = null; if (!runs.length || reduced() || !visible || document.hidden) { still(); return; } raf = requestAnimationFrame(frame); };
+    const play = () => { cancelAnimationFrame(raf); start = null; if (!current || reduced() || !visible || document.hidden) { still(); return; } raf = requestAnimationFrame(frame); };
+    // A click searches from that spot; the examples carry on afterwards.
+    live.addEventListener('click', e => {
+      const box = live.getBoundingClientRect();
+      const x = (e.clientX - box.left) * view.w / box.width, y = (e.clientY - box.top) * view.h / box.height;
+      const clamp = v => Math.max(0.02, Math.min(0.98, v));
+      current = searchFrom([clamp((x - 16) / (view.w - 32)), clamp((y - 16) / (view.h - 32))]);
+      play();
+    });
     if ('IntersectionObserver' in window) new IntersectionObserver(es => { visible = es[0].isIntersecting; play(); }).observe(live);
     document.addEventListener('visibilitychange', play);
     window.addEventListener('resize', () => { view = hidpi(live); still(); });
@@ -175,6 +186,43 @@
     still();
     play();
   }
+
+  // ---- the demo, opened over the page at full size and loaded on first open;
+  // a narrow screen, or a click meant for a new tab, follows the link instead ----
+  let overlay = null, lastFocus = null;
+  function closeDemo() {
+    if (!overlay || overlay.hidden) return;
+    overlay.hidden = true;
+    root.classList.remove('locked');
+    if (lastFocus) lastFocus.focus();
+  }
+  function openDemo(href) {
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.className = 'demo-overlay';
+      overlay.setAttribute('role', 'dialog');
+      overlay.setAttribute('aria-modal', 'true');
+      overlay.setAttribute('aria-label', 'Interactive demo');
+      overlay.innerHTML = `<div class="bar"><span>Interactive demo</span><span class="bar-acts"><a href="${href}" target="_blank" rel="noopener">Open in a new tab</a><button type="button" class="close" aria-label="Close the demo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></span></div><iframe title="Interactive research demo" src="${href}"></iframe>`;
+      document.body.appendChild(overlay);
+      overlay.querySelector('.close').addEventListener('click', closeDemo);
+      overlay.addEventListener('click', e => { if (e.target === overlay) closeDemo(); });
+      // Escape pressed inside the demo closes it too (same site, so the frame can be listened to).
+      overlay.querySelector('iframe').addEventListener('load', e => {
+        try { e.target.contentWindow.addEventListener('keydown', k => { if (k.key === 'Escape') closeDemo(); }); } catch (err) { /* another origin: the close button still works */ }
+      });
+    }
+    lastFocus = document.activeElement;
+    overlay.hidden = false;
+    root.classList.add('locked');
+    overlay.querySelector('.close').focus();
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDemo(); });
+  document.querySelectorAll('[data-demo]').forEach(a => a.addEventListener('click', e => {
+    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || window.innerWidth < 760) return;
+    e.preventDefault();
+    openDemo(a.getAttribute('href'));
+  }));
 
   // ---- research glyphs: one small picture per study ----
   function glyphs() {

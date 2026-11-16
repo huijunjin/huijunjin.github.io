@@ -58,9 +58,9 @@
       </div>
     </div>
     <figure class="live">
-      <span class="tag">Live · nearest-neighbour search</span>
+      <span class="tag">Live · click to search</span>
       <canvas id="live-search" aria-label="Animation: a query appears and an HNSW search jumps from the entry point across the upper layers, then walks the bottom layer to the five nearest points"></canvas>
-      <figcaption>An HNSW search: long jumps on the sparse upper layers (amber), then a close look on the bottom layer (blue) to the five nearest points.</figcaption>
+      <figcaption>An HNSW search: long jumps on the sparse upper layers (amber), then a close look on the bottom layer (blue) to the five nearest points. Click anywhere in the picture to search from there.</figcaption>
     </figure>
   </div>
 </section>
@@ -114,7 +114,7 @@
 <section id="demo">
   <div class="wrap narrow">
     <div class="demo">
-      <a class="shot" href="demo/?lang=en#intro" aria-label="Open the interactive demo">
+      <a class="shot" href="demo/?lang=en#intro" data-demo aria-label="Open the interactive demo">
         <img src="images/demo-preview.jpg" alt="The demo's opening scene: three stacked layers of an HNSW graph with a search path descending through them" width="1200" height="675" loading="lazy">
       </a>
       <div class="body">
@@ -122,7 +122,7 @@
           <span class="eyebrow">Interactive demo</span>
           <h2>The research, step by step</h2>
           <p>Made for my dissertation defense and for visitors to the lab. Each study runs live in your browser on a small 2-D example, one step at a time, next to measurements taken in Milvus.</p>
-          <div class="links"><a class="chip primary" href="demo/?lang=en#intro">Open the demo</a></div>
+          <div class="links"><a class="chip primary" href="demo/?lang=en#intro" data-demo>Open the demo</a></div>
         </div>
         <ol class="scenes">
           <li><span class="n">00</span><span><b>How HNSW searches</b>: layers, build, search</span></li>

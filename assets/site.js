@@ -27,6 +27,22 @@
     return `rgba(${n >> 16 & 255},${n >> 8 & 255},${n & 255},${a})`;
   };
 
+  // ---- theme: the visitor's system setting, unless they pick one with the
+  // header button (remembered in this browser) ----
+  const root = document.documentElement, toggle = document.querySelector('.theme');
+  const isDark = () => root.dataset.theme ? root.dataset.theme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const announce = () => {
+    if (toggle) toggle.setAttribute('aria-label', isDark() ? 'Switch to light mode' : 'Switch to dark mode');
+    document.dispatchEvent(new Event('themechange'));
+  };
+  if (toggle) toggle.addEventListener('click', () => {
+    root.dataset.theme = isDark() ? 'light' : 'dark';
+    try { localStorage.setItem('theme', root.dataset.theme); } catch (e) { /* private mode: not remembered */ }
+    announce();
+  });
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', announce);
+  if (toggle) toggle.setAttribute('aria-label', isDark() ? 'Switch to light mode' : 'Switch to dark mode');
+
   // ---- header ----
   const head = document.querySelector('.site-head');
   if (head) {
@@ -52,91 +68,85 @@
     });
   });
 
-  // ---- the live search: points, their nearest-neighbour links, and a greedy
-  // walk from the entry point to each new query, then its five nearest ----
+  // ---- the live search: a real HNSW (assets/hnsw.js, the demo's implementation)
+  // over 2-D points. Each query starts at the entry point on the top layer, takes
+  // long jumps across the sparse upper layers (amber), then looks around the
+  // bottom layer (blue) and ends on its five nearest points. ----
   const live = document.getElementById('live-search');
-  if (live) {
+  if (live && window.HN) {
     const r = rng(2027);
     const blobs = Array.from({ length: 6 }, () => [0.12 + r() * 0.76, 0.14 + r() * 0.72, 0.05 + r() * 0.05]);
     const pts = [];
-    while (pts.length < 150) {
+    while (pts.length < 160) {
       const b = blobs[Math.floor(r() * blobs.length)];
-      const p = r() < 0.2 ? [0.04 + r() * 0.92, 0.05 + r() * 0.9] : [b[0] + gauss(r) * b[2], b[1] + gauss(r) * b[2]];
+      const p = r() < 0.22 ? [0.04 + r() * 0.92, 0.05 + r() * 0.9] : [b[0] + gauss(r) * b[2], b[1] + gauss(r) * b[2]];
       if (p[0] < 0.03 || p[0] > 0.97 || p[1] < 0.04 || p[1] > 0.96) continue;
-      if (pts.some(q => dist(p, q) < 0.026)) continue;
+      if (pts.some(q => dist(p, q) < 0.025)) continue;
       pts.push(p);
     }
-    // Each point keeps its 3 nearest; links are kept both ways.
-    const nb = pts.map(() => new Set());
-    pts.forEach((p, i) => {
-      pts.map((q, j) => [dist(p, q), j]).filter(([, j]) => j !== i).sort((a, b) => a[0] - b[0]).slice(0, 3)
-        .forEach(([, j]) => { nb[i].add(j); nb[j].add(i); });
-    });
+    const g = new HN.HNSW({ M: 4, efConstruction: 40, seed: 7 });
+    pts.forEach(p => g.add(p));
     const links = [];
-    nb.forEach((s, i) => s.forEach(j => { if (i < j) links.push([i, j]); }));
-    let entry = 0;
-    pts.forEach((p, i) => { if (p[0] + p[1] < pts[entry][0] + pts[entry][1]) entry = i; });
-    const queries = Array.from({ length: 12 }, () => [0.15 + r() * 0.7, 0.15 + r() * 0.7]);
-
-    // Greedy best-first search: move to the neighbour nearest the query until
-    // none is nearer, then look one ring further for the five nearest.
-    function walk(q) {
-      const path = [entry], seen = new Set([entry]), looked = [];
-      let cur = entry;
-      for (;;) {
-        let best = cur;
-        for (const n of nb[cur]) { looked.push([cur, n]); seen.add(n); if (dist(pts[n], q) < dist(pts[best], q)) best = n; }
-        if (best === cur) break;
-        cur = best; path.push(cur);
-      }
-      for (const n of [...nb[cur]]) for (const m of nb[n]) { if (!seen.has(m)) { looked.push([n, m]); seen.add(m); } }
-      const found = [...seen].sort((a, b) => dist(pts[a], q) - dist(pts[b], q)).slice(0, 5);
-      return { q, path, looked, found };
+    g.links.forEach((ls, u) => { for (const v of ls[0]) if (u < v || !g.links[v][0].includes(u)) links.push([u, v]); });
+    // Queries the search answers exactly, far enough from the entry to show both phases.
+    const K = 5, EF = 12, runs = [];
+    for (let t = 0; t < 80 && runs.length < 8; t++) {
+      const q = [0.1 + r() * 0.8, 0.1 + r() * 0.8];
+      const res = g.search(q, K, EF, { trace: true }), truth = new Set(g.bruteForce(q, K));
+      if (res.ids.some(id => !truth.has(id))) continue;
+      const ev = res.trace.evaluated, first = new Map();
+      ev.forEach((e, i) => { if (!first.has(e.id)) first.set(e.id, i); });
+      const path = res.trace.path, at = path.map(id => (id === g.entry ? -1 : first.get(id)));
+      const upHops = path.filter((id, j) => j > 0 && ev[at[j]].layer > 0).length;
+      if (upHops < 1 || path.length < 4) continue;
+      runs.push({ q, ev, path, at, found: res.ids });
     }
-    const runs = queries.map(walk);
 
     let view = hidpi(live), C = {};
-    const tokens = () => { C = { ink: css('--ink'), ink3: css('--ink-3'), edge: css('--edge'), accent: css('--accent'), surface: css('--surface') }; };
+    const tokens = () => { C = { ink: css('--ink'), ink2: css('--ink-2'), ink3: css('--ink-3'), edge: css('--edge'), accent: css('--accent'), amber: css('--amber'), surface: css('--surface') }; };
     tokens();
-    const X = p => 14 + p[0] * (view.w - 28), Y = p => 14 + p[1] * (view.h - 28);
+    const X = p => 16 + p[0] * (view.w - 32), Y = p => 16 + p[1] * (view.h - 32);
     const seg = (ctx, a, b, k = 1) => { ctx.moveTo(X(a), Y(a)); ctx.lineTo(X(a) + (X(b) - X(a)) * k, Y(a) + (Y(b) - Y(a)) * k); };
 
-    // One query's frame at time t (seconds): query in, walk out hop by hop, rings, fade.
-    const HOP = 0.42, HOLD = 1.6, FADE = 0.5;
-    const span = run => 0.5 + run.path.length * HOP + 0.6 + HOLD + FADE;
+    // One query's frame at time t (seconds): query in, the walk event by event, rings, fade.
+    const WALK = 3.2, HOLD = 1.8, FADE = 0.5, span = 0.5 + WALK + 0.5 + HOLD + FADE;
     function draw(run, t) {
       const { ctx, w, h } = view;
       ctx.clearRect(0, 0, w, h);
       ctx.strokeStyle = C.edge; ctx.lineWidth = 1;
       ctx.beginPath(); for (const [a, b] of links) seg(ctx, pts[a], pts[b]); ctx.stroke();
-      const total = span(run), fade = Math.max(0, Math.min(1, (total - t) / FADE));
-      const hops = Math.max(0, (t - 0.5) / HOP), done = hops >= run.path.length - 1;
+      const fade = Math.max(0, Math.min(1, (span - t) / FADE));
+      const p = Math.max(0, Math.min(1, (t - 0.5) / WALK)) * run.ev.length;
       // what the search compared, in a light wash
-      const nLooked = Math.floor(Math.min(1, hops / Math.max(1, run.path.length - 1)) * run.looked.length * (done ? 1 : 0.8));
-      ctx.strokeStyle = alpha(C.accent, 0.22 * fade); ctx.lineWidth = 1.2;
-      ctx.beginPath(); for (const [a, b] of run.looked.slice(0, nLooked)) seg(ctx, pts[a], pts[b]); ctx.stroke();
+      for (const up of [true, false]) {
+        ctx.strokeStyle = alpha(up ? C.amber : C.accent, 0.28 * fade); ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        for (let i = 0; i < p; i++) if ((run.ev[i].layer > 0) === up) seg(ctx, pts[run.ev[i].from], pts[run.ev[i].id]);
+        ctx.stroke();
+      }
+      // points; the ones that also live on upper layers are drawn larger
       for (let i = 0; i < pts.length; i++) {
-        ctx.beginPath(); ctx.arc(X(pts[i]), Y(pts[i]), 2.4, 0, Math.PI * 2);
-        ctx.fillStyle = alpha(C.ink3, 0.9); ctx.fill();
+        const lv = g.level[i];
+        ctx.beginPath(); ctx.arc(X(pts[i]), Y(pts[i]), lv >= 2 ? 4 : lv ? 3 : 2.2, 0, Math.PI * 2);
+        ctx.fillStyle = lv >= 2 ? C.ink2 : lv ? C.ink3 : alpha(C.ink3, 0.7); ctx.fill();
       }
-      // the walk
-      ctx.strokeStyle = alpha(C.accent, fade); ctx.lineWidth = 2.6;
-      ctx.beginPath();
-      for (let i = 1; i < run.path.length; i++) {
-        const k = Math.max(0, Math.min(1, hops - (i - 1)));
-        if (k <= 0) break;
-        seg(ctx, pts[run.path[i - 1]], pts[run.path[i]], k);
+      // the walk: upper-layer jumps in amber, bottom-layer steps in blue
+      for (let j = 1; j < run.path.length; j++) {
+        const e = run.at[j];
+        if (e >= p) break;
+        const up = run.ev[e].layer > 0;
+        ctx.strokeStyle = alpha(up ? C.amber : C.accent, fade); ctx.lineWidth = up ? 3 : 2.6;
+        ctx.beginPath(); seg(ctx, pts[run.path[j - 1]], pts[run.path[j]]); ctx.stroke();
+        ctx.beginPath(); ctx.arc(X(pts[run.path[j]]), Y(pts[run.path[j]]), 4, 0, Math.PI * 2);
+        ctx.fillStyle = alpha(up ? C.amber : C.accent, fade); ctx.fill();
       }
-      ctx.stroke();
-      for (let i = 0; i < run.path.length && i <= hops; i++) {
-        ctx.beginPath(); ctx.arc(X(pts[run.path[i]]), Y(pts[run.path[i]]), 4, 0, Math.PI * 2);
-        ctx.fillStyle = alpha(C.accent, fade); ctx.fill();
-      }
-      // entry point
-      ctx.beginPath(); ctx.arc(X(pts[entry]), Y(pts[entry]), 5, 0, Math.PI * 2);
-      ctx.fillStyle = C.ink; ctx.fill();
+      // the entry point, on the top layer
+      const ex = X(pts[g.entry]), ey = Y(pts[g.entry]);
+      ctx.beginPath(); ctx.arc(ex, ey, 5.5, 0, Math.PI * 2); ctx.fillStyle = C.ink; ctx.fill();
+      ctx.font = `600 11px ${css('--mono') || 'monospace'}`; ctx.fillStyle = C.ink2; ctx.textAlign = 'center';
+      ctx.fillText('entry', ex, ey - 11);
       // the five nearest, once the walk is done
-      const ringK = Math.max(0, Math.min(1, (t - (0.5 + (run.path.length - 1) * HOP)) / 0.5)) * fade;
+      const ringK = Math.max(0, Math.min(1, (t - 0.5 - WALK) / 0.5)) * fade;
       if (ringK > 0) for (const id of run.found) {
         ctx.beginPath(); ctx.arc(X(pts[id]), Y(pts[id]), 8, 0, Math.PI * 2);
         ctx.strokeStyle = alpha(C.accent, ringK); ctx.lineWidth = 1.8; ctx.stroke();
@@ -149,19 +159,19 @@
     }
 
     let idx = 0, start = null, raf = 0, visible = true;
-    const still = () => draw(runs[0], span(runs[0]) - FADE);
+    const still = () => { if (runs.length) draw(runs[0], span - FADE - 0.01); };
     function frame(now) {
       if (start == null) start = now;
       let t = (now - start) / 1000;
-      if (t > span(runs[idx])) { idx = (idx + 1) % runs.length; start = now; t = 0; }
+      if (t > span) { idx = (idx + 1) % runs.length; start = now; t = 0; }
       draw(runs[idx], t);
       raf = requestAnimationFrame(frame);
     }
-    const play = () => { cancelAnimationFrame(raf); if (reduced() || !visible || document.hidden) { still(); return; } raf = requestAnimationFrame(frame); };
+    const play = () => { cancelAnimationFrame(raf); start = null; if (!runs.length || reduced() || !visible || document.hidden) { still(); return; } raf = requestAnimationFrame(frame); };
     if ('IntersectionObserver' in window) new IntersectionObserver(es => { visible = es[0].isIntersecting; play(); }).observe(live);
     document.addEventListener('visibilitychange', play);
-    window.addEventListener('resize', () => { view = hidpi(live); if (reduced()) still(); });
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { tokens(); glyphs(); if (reduced()) still(); });
+    window.addEventListener('resize', () => { view = hidpi(live); still(); });
+    document.addEventListener('themechange', () => { tokens(); still(); });
     still();
     play();
   }
@@ -211,4 +221,5 @@
   }
   glyphs();
   window.addEventListener('resize', glyphs);
+  document.addEventListener('themechange', glyphs);
 })();

@@ -94,6 +94,15 @@ Links into the demo open a scene directly and in English, for example
 `demo/?lang=en#repair`. The scenes are `intro`, `density`, `repair`, `shortcut`,
 `versus` and `perf`.
 
+On the home page the demo has one way in: the screenshot and the "Open the demo"
+button in `#demo`. Both carry a `data-demo` attribute, which makes them open the
+demo over the page at full size (closed with the X button or Escape). On a
+screen narrower than 760px, or with Ctrl/Cmd-click, they open `demo/` as a
+normal page instead. Add `data-demo` to any other link that should behave the same.
+
+The hero picture is the HNSW in `assets/hnsw.js` running live: it loops through
+eight example queries, and a click on the picture searches from that spot.
+
 ### Colours, fonts and spacing
 All of them are tokens at the top of `assets/site.css`. The light values are in
 the first `:root` block; the dark values are repeated in two blocks right below
